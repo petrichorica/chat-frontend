@@ -13,7 +13,7 @@ function ChatRoom({username, id}) {
   const [users, setUsers] = useState([]);
   // const [currentFile, setCurrentFile] = useState();
   const [headerText, setHeaderText] = useState("Chat Room");
-  const [showEmojis, setShowEmojis] = useState(true);
+  const [showEmojis, setShowEmojis] = useState(false);
 
   const inputRef = useRef(null);
   const messageEndRef = useRef(null);
@@ -28,9 +28,10 @@ function ChatRoom({username, id}) {
   }
 
   const getMessages = async () => {
-    fetch("http://localhost:1337/api/messages", {
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/messages`, {
       method: "GET",
       headers: {
+        "Content-type": "application/json",
         Authorization: `Bearer ${window.sessionStorage.getItem('jwt')}`
       }
     })
@@ -43,7 +44,7 @@ function ChatRoom({username, id}) {
 
       for (const item of arr) {
         if (item.isFile) {
-          await fetch("http://localhost:1337/api/upload-files?filters[name][$eq]="
+          await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/upload-files?filters[name][$eq]=`
             + item.message, {
               method: "GET",
               headers: {
@@ -84,7 +85,7 @@ function ChatRoom({username, id}) {
 
     io.on("disconnect", () => {
       io.off();
-      location.replace("http://localhost:3000/chat");
+      location.replace(`${process.env.NEXT_PUBLIC_SERVER_HOST}/chat`);
       console.log("disconnected");
     })
 
@@ -105,7 +106,7 @@ function ChatRoom({username, id}) {
     });
 
     io.on("roomData", async (data) => {
-      await fetch("http://localhost:1337/api/active-users", {
+      await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/active-users`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${window.sessionStorage.getItem('jwt')}`
@@ -209,7 +210,7 @@ function ChatRoom({username, id}) {
         actualName: file.actualName
       }
     };
-    fetch("http://localhost:1337/api/upload-files", {
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/upload-files`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${window.sessionStorage.getItem('jwt')}`,
@@ -362,7 +363,7 @@ function ChatRoom({username, id}) {
                 ) : (
                   <div
                     className={`mb-2 ${
-                      messageItem.user === username ? 'self-end bg-blue-400' : 'self-start bg-gray-200'
+                      messageItem.user === username ? 'self-end bg-blue-400 text-white' : 'self-start bg-gray-200'
                     } rounded-lg p-2`}
                     >
                     <p className="text-sm">{messageItem.message}</p>
@@ -452,6 +453,7 @@ export default function Chat() {
       method: "GET",
       headers: {
         "Content-type": "application/json",
+        Authorization: `Bearer ${window.sessionStorage.getItem('jwt')}`
       },
     })
     .then((res) => {
