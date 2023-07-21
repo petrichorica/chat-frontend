@@ -72,7 +72,7 @@ function ChatRoom({username, id}) {
   }
 
   useEffect(() => {
-    setIo(socket("http://localhost:1337"));//Connecting to Socket.io backend
+    setIo(socket(`${process.env.NEXT_PUBLIC_SERVER_HOST}`));//Connecting to Socket.io backend
   }, []);
   // const io = socket("http://localhost:1337");//Connecting to Socket.io backend
   // const stream = ss.createStream();
@@ -449,7 +449,7 @@ export default function Chat() {
       return;
     }
 
-    fetch(`http://localhost:1337/api/users/${user.id}`, {
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${user.id}`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
