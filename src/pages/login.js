@@ -39,7 +39,7 @@ export default function Login() {
   return (
     <div className="flex w-full min-h-full items-center justify-center -mt-10 p-12 sm:px-6 lg:px-8">
       <div className='flex flex-col w-2/5'>
-      <h2 className='text-center text-3xl font-bold tracking-tight text-gray-900'>Login</h2>
+      <h2 className='text-center text-3xl font-bold tracking-tight text-gray-900'>Log In</h2>
         <form className='flex flex-col mt-8 p-6 space-y-4 rounded shadow-lg'>
           <label htmlFor="email" className='text-lg'>Email: </label>
           <input
