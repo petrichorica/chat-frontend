@@ -11,7 +11,7 @@ export default function Login() {
       identifier: email,
       password
     };
-    const data = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/auth/local`, {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/auth/local`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
