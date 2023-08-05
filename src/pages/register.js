@@ -11,7 +11,7 @@ export default function Login() {
   const handlesubmit = (e) => {
     e.preventDefault();
     const userData = {email, username, password};
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/auth/local/register`, {
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/auth/local/register`, {
       method: 'POST',
       headers: {
         "Content-type": "application/json",
